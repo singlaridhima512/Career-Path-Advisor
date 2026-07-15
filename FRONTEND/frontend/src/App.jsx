@@ -20,9 +20,11 @@ function App() {
                 }/>
 
                 <Route path="*" element={<Navigate to="/login" replace />} />
+                <Route path="/profile" element={<Protected><Profile /></Protected>} />
             </Routes>
         </BrowserRouter>
     );
 }
 
 export default App;
+import Profile from "./pages/Profile";
