@@ -1,0 +1,212 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#09090c;
+}
+
+.login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top left,#6d28d9 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#2563eb 0%,transparent 35%),
+    #09090c;
+
+}
+
+.login-card{
+
+    width:400px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+
+    padding:40px;
+
+    color:white;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+}
+
+.login-card h1 {
+    background: linear-gradient(90deg, #7c3aed, #60a5fa);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+    margin-bottom:30px;
+
+}
+
+.input-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:20px;
+
+}
+
+.input-group label{
+
+    margin-bottom:8px;
+
+    font-size:.9rem;
+
+    color:#e5e7eb;
+
+}
+
+.input-group input{
+
+    padding:14px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:10px;
+
+    background:#1e293b;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+.input-group input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+.password-box{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#1e293b;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+}
+
+.password-box input{
+
+    flex:1;
+
+    border:none;
+
+    background:transparent;
+
+}
+
+.eye-btn{
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    padding:0 15px;
+
+}
+
+.login-btn{
+
+    width:100%;
+
+    margin-top:10px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    background:linear-gradient(90deg,#7c3aed,#2563eb);
+
+    color:white;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+
+}
+
+.register-text{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+}
+
+.register-text a{
+
+    color:#60a5fa;
+
+    margin-left:6px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+.register-text a:hover{
+
+    text-decoration:underline;
+
+}
