@@ -35,7 +35,7 @@ const Register = () => {
             await handleRegister(formData);
 
             // Change this if you want to redirect somewhere else
-            navigate("/home");
+            navigate("/profile");
 
         } catch (err) {
 
