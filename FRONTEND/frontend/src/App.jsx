@@ -2,29 +2,45 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Protected from "./components/Protected";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Protected from "./components/Protected";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<Login />} />
 
+                {/* Public Routes */}
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                <Route path="/home" element={
-                    <Protected>
-                        <Home />
-                    </Protected>
-                }/>
+                {/* Protected Home Route */}
+                <Route
+                    path="/"
+                    element={
+                        <Protected>
+                            <Home />
+                        </Protected>
+                    }
+                />
 
-                <Route path="*" element={<Navigate to="/login" replace />} />
-                <Route path="/profile" element={<Protected><Profile /></Protected>} />
+                {/* Protected Profile Route */}
+                <Route
+                    path="/profile"
+                    element={
+                        <Protected>
+                            <Profile />
+                        </Protected>
+                    }
+                />
+
+                {/* Redirect unknown routes to Home */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+
             </Routes>
         </BrowserRouter>
     );
 }
 
 export default App;
-import Profile from "./pages/Profile";

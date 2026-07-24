@@ -30,7 +30,7 @@ const Login = () => {
 
         await handleLogin(formData);
 
-        navigate("/profile");
+        navigate("/");
 
     } catch (err) {
 
