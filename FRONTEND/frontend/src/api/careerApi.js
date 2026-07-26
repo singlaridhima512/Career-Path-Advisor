@@ -29,3 +29,26 @@ export async function updateProfile({ skills, interests, background }) {
     }
 
 }
+
+// Get past suggestion history
+export async function getHistory() {
+
+    try {
+
+        const response = await axios.get(
+            `${BASE_URL}/history`,
+            {
+                withCredentials: true
+            }
+        );
+
+        return response.data;
+
+    } catch (err) {
+
+        console.log(err);
+        throw err;
+
+    }
+
+}

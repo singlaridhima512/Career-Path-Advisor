@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import History from "./pages/History"; 
 import Protected from "./components/Protected";
 
 function App() {
@@ -34,7 +35,15 @@ function App() {
                         </Protected>
                     }
                 />
-
+                {/* Protected History Route */}
+                <Route
+                 path="/history"
+                 element={
+                  <Protected>
+                   <History />
+                  </Protected>
+            }
+          />
                 {/* Redirect unknown routes to Home */}
                 <Route path="*" element={<Navigate to="/" replace />} />
 

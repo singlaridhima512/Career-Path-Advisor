@@ -1,4 +1,5 @@
 const userModel = require("../models/usermodel");
+const CareerSuggestion = require("../models/CareerSuggestions");
 
 /**
  * @route POST /api/career/profile
@@ -69,6 +70,38 @@ async function updateProfile(req, res) {
 
 }
 
+
+/**
+ * @route GET /api/career/history
+ * @description Get logged-in user's past suggestion sets, newest first
+ * @access Private
+ */
+async function getHistory(req, res) {
+
+    try {
+
+        const history = await CareerSuggestion
+            .find({ userId: req.user.id })
+            .sort({ createdAt: -1 });
+
+        if (!history.length) {
+            return res.status(200).json({ history: [] });
+        }
+
+        res.status(200).json({ history });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Internal Server Error"
+        });
+
+    }
+}
+
 module.exports = {
-    updateProfile
+    updateProfile,
+    getHistory
 };
