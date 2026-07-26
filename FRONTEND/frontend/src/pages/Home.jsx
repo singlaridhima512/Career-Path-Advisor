@@ -1,6 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { getCareerAdvice } from "../api/careerApi";
 
 export const Home = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleGetAdvice = async () => {
+        setLoading(true);
+        setError("");
+
+        try {
+            const data = await getCareerAdvice();
+            navigate("/results", { state: { suggestions: data.suggestions } });
+        } catch (err) {
+            setError(
+                err.response?.data?.message || "Something went wrong. Please try again."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="home-container">
             <section className="hero">
@@ -17,10 +39,16 @@ export const Home = () => {
                         Build Your Profile
                     </Link>
 
-                    <Link to="/career" className="btn-secondary">
-                        Explore Careers
-                    </Link>
+                    <button
+                        className="btn-secondary"
+                        onClick={handleGetAdvice}
+                        disabled={loading}
+                    >
+                        {loading ? "Analyzing your profile..." : "Explore Careers"}
+                    </button>
                 </div>
+
+                {error && <p className="history-status error" style={{ marginTop: "1rem" }}>{error}</p>}
             </section>
 
             <section className="features">

@@ -52,3 +52,26 @@ export async function getHistory() {
     }
 
 }
+// Get AI-generated career advice (also saves it to history)
+export async function getCareerAdvice() {
+
+    try {
+
+        const response = await axios.post(
+            `${BASE_URL}/advise`,
+            {},
+            {
+                withCredentials: true
+            }
+        );
+
+        return response.data;
+
+    } catch (err) {
+
+        console.log(err);
+        throw err;
+
+    }
+
+}
