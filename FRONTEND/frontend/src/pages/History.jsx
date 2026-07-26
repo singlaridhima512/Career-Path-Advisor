@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { getHistory } from "../api/careerApi";
-import "../styles/History.css";
+// import "../styles/History.css";
 
 const History = () => {
     const [history, setHistory] = useState([]);

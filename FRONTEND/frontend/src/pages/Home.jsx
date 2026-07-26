@@ -13,11 +13,11 @@ export const Home = () => {
                 </p>
 
                 <div className="hero-buttons">
-                    <Link to="/profile-builder" className="btn-primary">
+                    <Link to="/profile" className="btn-primary">
                         Build Your Profile
                     </Link>
 
-                    <Link to="/career-analysis" className="btn-secondary">
+                    <Link to="/career" className="btn-secondary">
                         Explore Careers
                     </Link>
                 </div>
