@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:1000/api/career";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/career`;
 
 // Update Profile - skills, interests, background
 export async function updateProfile({ skills, interests, background }) {
