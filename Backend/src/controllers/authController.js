@@ -1,4 +1,4 @@
-const userModel = require("../models/usermodel");
+const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");   //for password hashing
 const jwt = require("jsonwebtoken");  //creating a token for every logged in user
 
