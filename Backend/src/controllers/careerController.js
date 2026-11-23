@@ -1,9 +1,32 @@
-
 const userModel = require("../models/userModel");
 const CareerSuggestion = require("../models/CareerSuggestions");   // ← fixed to match your actual filename
 
 const { GoogleGenAI } = require("@google/genai");
 const genAI = new GoogleGenAI({ apiKey: process.env.AI_API_KEY });
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Calls Gemini with retries. If the primary model is overloaded (503) or
+ * rate-limited (429), it retries with backoff and then tries fallback models.
+ */
+async function generateWithRetry(ai, params) {
+  const models = [params.model, "gemini-2.5-flash-lite", "gemini-2.0-flash"];
+  let lastErr;
+  for (const model of models) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        return await ai.models.generateContent({ ...params, model });
+      } catch (err) {
+        lastErr = err;
+        if (err.status === 404) break;                       // model name invalid, try next model
+        if (err.status !== 503 && err.status !== 429) throw err; // other errors: stop immediately
+        await sleep(1000 * 2 ** attempt);                    // wait 1s, 2s, 4s
+      }
+    }
+  }
+  throw lastErr;
+}
 
 /**
  * @route POST /api/career/profile
@@ -138,7 +161,7 @@ Respond ONLY with a valid JSON object in this exact structure, with no extra tex
 The "suggestions" array must contain exactly 3 objects.
 `;
 
-    const result = await genAI.models.generateContent({
+    const result = await generateWithRetry(genAI, {
       model: "gemini-flash-latest",
       contents: prompt,
       config: {
@@ -181,6 +204,12 @@ The "suggestions" array must contain exactly 3 objects.
     });
   } catch (error) {
     console.log(error);
+
+    if (error.status === 503 || error.status === 429) {
+      return res.status(503).json({
+        message: "AI is busy right now. Please try again in a minute.",
+      });
+    }
 
     res.status(500).json({
       message: "Internal Server Error",
