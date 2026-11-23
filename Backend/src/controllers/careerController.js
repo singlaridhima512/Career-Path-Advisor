@@ -11,23 +11,29 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * rate-limited (429), it retries with backoff and then tries fallback models.
  */
 async function generateWithRetry(ai, params) {
-  const models = [params.model, "gemini-2.5-flash-lite", "gemini-2.0-flash"];
+  const models = [
+    params.model,
+    "gemini-3.8-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.6-flash",
+    "gemini-2.5-flash-lite",
+  ];
   let lastErr;
   for (const model of models) {
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < 2; attempt++) {
       try {
         return await ai.models.generateContent({ ...params, model });
       } catch (err) {
         lastErr = err;
-        if (err.status === 404) break;                       // model name invalid, try next model
-        if (err.status !== 503 && err.status !== 429) throw err; // other errors: stop immediately
-        await sleep(1000 * 2 ** attempt);                    // wait 1s, 2s, 4s
+        console.log(`Gemini model ${model} failed with status ${err.status}`);
+        if (err.status === 404 || err.status === 403) break; // model unavailable, try next one
+        if (err.status !== 503 && err.status !== 429) throw err; // other errors: stop
+        await sleep(1000 * 2 ** attempt); // 1s, 2s
       }
     }
   }
   throw lastErr;
 }
-
 /**
  * @route POST /api/career/profile
  * @description Update logged-in user's skills, interests and academic background
